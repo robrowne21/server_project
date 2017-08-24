@@ -1,0 +1,35 @@
+body { 
+	text-align: center; 
+	background-color: black;
+
+}
+
+div.centered {
+    width: 500px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin-top: -200px;
+    margin-left: -250px;
+}
+
+div.bottom {
+	position:fixed;
+	bottom:0;
+	width: 500px;
+    left: 50%;
+    margin-left: -250px;
+}
+
+p.normal {
+    font-style: italic;
+	color: white;
+	font-size: 30px;
+}
+
+p.bottom {
+    font-style: italic;
+	color: white;
+	font-size: 15px;
+}
