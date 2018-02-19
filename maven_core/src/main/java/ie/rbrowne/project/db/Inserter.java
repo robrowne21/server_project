@@ -1,21 +1,28 @@
 package ie.rbrowne.project.db;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Inserter {
   private String tableName;
+  private Statement statement;
 
   public Inserter(String tableName) {
     this.tableName = tableName;
+    this.statement = DatabaseUtilities.getDBStatement();
   }
 
-  public void insertReversedString(String original, String reversed) {
+  public void insertReversedString(int id, String desc) {
 
-    String SQL = "INSERT INTO " + tableName + " (original_string, reversed_string) VALUES('" + original + "', '" + reversed + "');";
+    String SQL = "INSERT INTO " + tableName + " (id, descn) VALUES (" + id + ", '" + desc + "')";
+    System.out.println(SQL);
     try {
-      DatabaseUtilities.getDBStatement().executeUpdate(SQL);
+      statement.executeUpdate(SQL);
+      DatabaseUtilities.commit();
     } catch (SQLException e) {
       System.out.println("Error executing statement" + e.getMessage());
+    } finally {
+      DatabaseUtilities.close();
     }
   }
 }

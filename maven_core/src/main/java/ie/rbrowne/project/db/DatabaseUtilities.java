@@ -6,19 +6,26 @@ import java.sql.Statement;
 
 public class DatabaseUtilities {
 
+  private static Connection dbConnection;
+  private static boolean initialized;
+
   private DatabaseUtilities() {
 
   }
 
   private static Connection getDBConnection() {
-    ConnectionManager.hostname = "db_env";
-    ConnectionManager.port = 1521;
-    ConnectionManager.database = "XE";
-    ConnectionManager.username = "rbrowne";
-    ConnectionManager.password = "password";
+    if (!initialized) {
+      ConnectionManager.hostname = "localhost";
+      ConnectionManager.port = 1521;
+      ConnectionManager.database = "xe";
+      ConnectionManager.username = "robbie";
+      ConnectionManager.password = "Passw0rd";
 
-    Connection connection = ConnectionManager.getNewConnection();
-    return connection;
+      dbConnection = ConnectionManager.getNewConnection();
+    }
+
+    return dbConnection;
+
 
 
     // Connection dbConnection = null;
@@ -29,6 +36,25 @@ public class DatabaseUtilities {
     // }
     //
     // return dbConnection;
+  }
+
+  public static void commit() {
+    try {
+      dbConnection.commit();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  public static void close() {
+    try {
+      dbConnection.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    initialized = false;
   }
 
   public static Statement getDBStatement() {
